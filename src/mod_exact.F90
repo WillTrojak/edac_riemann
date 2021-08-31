@@ -44,12 +44,9 @@ contains
 
          psl = dpl + ql(1)
          psr = qr(1) - dpr
-         print *, us, dpl, dpr, gdpl, gdpr
       enddo
-      ps = qr(1) - dpr
-      ps = ql(1) + dpl
+      ps = 0.5*(psl + psr)
 
-      print *,'Presure', qr(1) - dpr,ql(1) + dpl
       ft(1) = us*(ps + ed_zeta)
       ft(2) = us*us + ps
 
@@ -75,24 +72,20 @@ contains
 
       if(1.5*ql(2) - dl .le. 1.5*us - dsl) then
          ! Rarefaction
-         print *,'lrare'
          dpl = 0.25*(ql(2)*ql(2) - us*us)
          gdpl = -0.5*us
       else
          ! Shock
-         print *,'lshock'
          dpl = (us - ql(2))*(-0.5*ql(2) - dl)
          gdpl = -0.5*ql(2) - dl
       endif
 
       if(1.5*us + dsr .le. 1.5*qr(2) + dr) then
          ! Rarefaction
-         print *,'rrare'
          dpr = -0.25*(qr(2)*qr(2) - us*us)
          gdpr = 0.5*us
       else
          ! Shock
-         print *,'rshock'
          dpr = (qr(2) - us)*(-0.5*qr(2) + dr)
          gdpr = 0.5*qr(2) - dr
       endif
@@ -101,18 +94,3 @@ contains
    
    
 end module exact
-
-! Left
-! dP/du = (P + z)/(u/2 - d) = (d + u/2)(d - u/2)/(u/2 - d) = -d - u/2
-! dP/du = - u/2 - sqrt(u*u/4 + P + z)
-! P = - u*u/4 - z
-! => dP/du = -u/2
-! dP/ud = -u/2
-!
-! 
-! P + z = d^2 - u^2/4 = (d - u/2)(d + u/2)
-! -(P + z)/(d + u/2) = u/2 - d
-!
-! Right
-! dP/du = (P + z)/(d + u/2) = (d - u/2)
-! P = -z - u^2/4
