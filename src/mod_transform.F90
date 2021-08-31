@@ -138,7 +138,7 @@ contains
 
       u = t
 
-      u(offset + 1) = -n(1)*t(offset + 1)
+      u(offset + 1) = n(1)*t(offset + 1)
 
    end function transform_from_1d
 
